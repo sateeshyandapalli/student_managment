@@ -6,7 +6,11 @@ db_connection = mysql.connector.connect(host=config.credentials.get('host'),
                                         passwd=config.credentials.get("password"),
                                         port=config.credentials.get("port"),
                                         db=config.credentials.get("database"))
-db_cursor = db_connection.cursor()
-db_cursor.execute(
-    "CREATE TABLE IF NOT EXISTS student (id VARCHAR(255) PRIMARY KEY, first_name VARCHAR(255), last_name varchar(255))")
-db_cursor.close()
+
+try:
+    db_cursor = db_connection.cursor()
+    db_cursor.execute(
+        "CREATE TABLE IF NOT EXISTS student (id VARCHAR(255) PRIMARY KEY NOT NULL, first_name VARCHAR(255) NOT NULL, last_name varchar(255))")
+    db_cursor.close()
+except Exception as e:
+    print("creating table failed:" + str(e))
