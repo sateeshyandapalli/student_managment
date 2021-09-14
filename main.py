@@ -5,9 +5,9 @@ from services import create_student as cs, get_student as gs, delete_student as 
 app = Flask(__name__, static_folder='ui', template_folder="templates/")
 
 
-@app.route("/")
-def index():
-    return render_template("index.html")
+# @app.route("/")
+# def index():
+#     return render_template("index.html")
 
 
 @app.route('/createStudent', methods=['POST'])
