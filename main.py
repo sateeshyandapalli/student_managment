@@ -1,13 +1,14 @@
+import csv
 from flask import Flask, request, render_template
 from services import create_student as cs, get_student as gs, delete_student as ds, update_student as us, \
     list_students as ls
 
-app = Flask(__name__, static_folder='ui', template_folder="templates/")
+app = Flask(__name__, template_folder="templates/")
 
 
-# @app.route("/")
-# def index():
-#     return render_template("index.html")
+@app.route("/")
+def index():
+    return render_template("index.html")
 
 
 @app.route('/createStudent', methods=['POST'])
@@ -59,11 +60,14 @@ def delete_student():
     return prepare_response(done, err, "deleteStudent")
 
 
-# @app.route('/listStudents', methods=['GET'])
-# def list_students():
-#     l = ls.CListStudents()
-#     done, err, data = l.list_students()
-#     return prepare_response(done, err, "listStudents", data)
+@app.route('/exportStudents', methods=['GET'])
+def list_students():
+    l = ls.CListStudents()
+    done, err, data = l.list_students()
+    with open('students.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(data)
+    return render_template("blank.html")
 
 
 def prepare_response(done, err, service, data=None):

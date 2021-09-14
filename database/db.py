@@ -61,7 +61,7 @@ def get(id: str):
 
 
 def list():
-    data = []
+    data = [["id", "first_name", "last_name"]]
     try:
         if is_connected():
             db_cursor = db_connection.cursor()
@@ -69,7 +69,7 @@ def list():
             result = db_cursor.fetchall()
             for x in result:
                 if len(x) == 3:
-                    data.append({"id": x[0], "first_name": x[1], "last_name": x[2]})
+                    data.append([x[0], x[1], x[2]])
             db_cursor.close()
         else:
             False, "".format("database connection failed"), None
